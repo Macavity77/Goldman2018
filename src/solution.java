@@ -189,43 +189,5 @@ public class solution {
     public static void main(String[] args) {
 //        int[][] temp = new int[][]{{1,2,3},{3,2,1},{1,2,3}};
 //        System.out.print(MinPath(temp));
-        List<Integer> seats = new ArrayList<>();
-        seats.add(1);
-        seats.add(3);
-        seats.add(1);
-        seats.add(2);
-        List<Integer> seats1 = new ArrayList<>();
-        seats1.add(990);
-        seats1.add(780);
-        seats1.add(830);
-        seats1.add(860);
-        seats1.add(920);
-        List<List<Integer>> seats2 = new ArrayList<>();
-        List<Integer> p1 = new ArrayList<>();
-        List<Integer> p2 = new ArrayList<>();
-        List<Integer> p3 = new ArrayList<>();
-        List<Integer> p4 = new ArrayList<>();
-        List<Integer> p5 = new ArrayList<>();
-        p1.add(3);
-        p1.add(2);
-        p1.add(1);
-        p2.add(3);
-        p2.add(0);
-        p2.add(0);
-        p3.add(2);
-        p3.add(0);
-        p3.add(1);
-        p4.add(0);
-        p4.add(1);
-        p4.add(3);
-        p5.add(0);
-        p5.add(2);
-        p5.add(3);
-        seats2.add(p1);
-        seats2.add(p2);
-        seats2.add(p3);
-        seats2.add(p4);
-        seats2.add(p5);
-        System.out.print(allocateSchools(seats, seats1,seats2));
     }
 }
