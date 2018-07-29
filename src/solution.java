@@ -100,8 +100,132 @@ public class solution {
         return result;
     }
 
+    static String winner(String erica, String bob) {
+        if (erica == null && bob != null && bob.length() > 0) {
+            return "Bob";
+        }
+        if (bob == null && erica != null && erica.length() > 0) {
+            return "Erica";
+        }
+        int erica_e = (int) erica.chars().filter(chi -> chi == 'E').count();
+        int erica_m = (int) erica.chars().filter(chi -> chi == 'M').count();
+        int erica_h = (int) erica.chars().filter(chi -> chi == 'H').count();
+
+        int bob_e = (int) bob.chars().filter(chi -> chi == 'E').count();
+        int bob_m = (int) bob.chars().filter(chi -> chi == 'M').count();
+        int bob_h = (int) bob.chars().filter(chi -> chi == 'H').count();
+
+        int erica_score = 3 * erica_h + 2 * erica_m + erica_e;
+        int bob_score = 3 * bob_h + 2 * bob_m + bob_e;
+
+        if (erica_score > bob_score) {
+            return "Erica";
+        } else if (bob_score > erica_score) {
+            return "Bob";
+        } else if (erica_h > bob_h) {
+            return "Erica";
+        } else if (bob_h > erica_h) {
+            return "Bob";
+        } else if (erica_m > bob_m) {
+            return "Erica";
+        } else if (bob_m > erica_m) {
+            return "Bob";
+        } else if (erica_e > bob_e) {
+            return "Erica";
+        } else if (bob_e > erica_e) {
+            return "Bob";
+        } else {
+            return "Tie";
+        }
+    }
+
+    static List<Integer> allocateSchools(List<Integer> schoolSeatsArray, List<Integer> studentScoreArray, List<List<Integer>> studentSchoolPreferencesArray) {
+        class Student {
+            int ID;
+            int score;
+            Student (int id, int score) {
+                ID = id;
+                this.score = score;
+            }
+        }
+
+        Student[] studentRank = new Student[studentScoreArray.size()];
+        for (int i = 0; i < studentScoreArray.size(); i++) {
+            studentRank[i] = new Student(i, studentScoreArray.get(i));
+        }
+        Arrays.sort(studentRank, new Comparator<Student>() {
+            public int compare(Student s1, Student s2) {
+                return s2.score - s1.score;
+            }
+        });
+
+        List<Integer> currRank;
+        int studNotAllocate = 0;
+        for (Student currStudent : studentRank) {
+            currRank = studentSchoolPreferencesArray.get(currStudent.ID);
+            for (int i = 0; i < currRank.size(); i++) {
+                if (schoolSeatsArray.get(currRank.get(i)) > 0) {
+                    schoolSeatsArray.set(currRank.get(i), schoolSeatsArray.get(currRank.get(i)) - 1);
+                    break;
+                }
+                if (i == currRank.size() - 1) {
+                    studNotAllocate++;
+                }
+            }
+        }
+
+        int seatNotFilled = 0;
+        for (int i : schoolSeatsArray) {
+            seatNotFilled += i;
+        }
+
+        List<Integer> result = new ArrayList<>();
+        result.add(seatNotFilled);
+        result.add(studNotAllocate);
+
+        return result;
+    }
+
     public static void main(String[] args) {
-        int[][] temp = new int[][]{{1,2,3},{3,2,1},{1,2,3}};
-        System.out.print(MinPath(temp));
+//        int[][] temp = new int[][]{{1,2,3},{3,2,1},{1,2,3}};
+//        System.out.print(MinPath(temp));
+        List<Integer> seats = new ArrayList<>();
+        seats.add(1);
+        seats.add(3);
+        seats.add(1);
+        seats.add(2);
+        List<Integer> seats1 = new ArrayList<>();
+        seats1.add(990);
+        seats1.add(780);
+        seats1.add(830);
+        seats1.add(860);
+        seats1.add(920);
+        List<List<Integer>> seats2 = new ArrayList<>();
+        List<Integer> p1 = new ArrayList<>();
+        List<Integer> p2 = new ArrayList<>();
+        List<Integer> p3 = new ArrayList<>();
+        List<Integer> p4 = new ArrayList<>();
+        List<Integer> p5 = new ArrayList<>();
+        p1.add(3);
+        p1.add(2);
+        p1.add(1);
+        p2.add(3);
+        p2.add(0);
+        p2.add(0);
+        p3.add(2);
+        p3.add(0);
+        p3.add(1);
+        p4.add(0);
+        p4.add(1);
+        p4.add(3);
+        p5.add(0);
+        p5.add(2);
+        p5.add(3);
+        seats2.add(p1);
+        seats2.add(p2);
+        seats2.add(p3);
+        seats2.add(p4);
+        seats2.add(p5);
+        System.out.print(allocateSchools(seats, seats1,seats2));
     }
 }
